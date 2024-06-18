@@ -3,3 +3,4 @@ Django~=4.1.0
 Pillow==10.3.0
 sqlparse==0.4.2
 python-decouple==3.8
+django-braces==1.15.0
