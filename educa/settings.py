@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = [
     "debug_toolbar",
     "redisboard",
     "rest_framework",
+    "channels",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -92,7 +93,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "educa.wsgi.application"
-
+ASGI_APPLICATION = "educa.asgi.application"
 
 # REST FRAMEWORK
 
