@@ -37,19 +37,29 @@ INTERNAL_IPS = [
 
 # Application definition
 
-INSTALLED_APPS = [
-    "courses.apps.CoursesConfig",
-    "students.apps.StudentsConfig",
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+LOCAL_APPS = [
+    "courses.apps.CoursesConfig",
+    "students.apps.StudentsConfig",
+]
+
+THIRD_PARTY_APPS = [
     "embed_video",
     "debug_toolbar",
     "redisboard",
+    "rest_framework",
 ]
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -82,6 +92,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "educa.wsgi.application"
 
+
+# REST FRAMEWORK
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ]
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
