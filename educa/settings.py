@@ -49,6 +49,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "courses.apps.CoursesConfig",
     "students.apps.StudentsConfig",
+    "chat.apps.ChatConfig",
 ]
 
 THIRD_PARTY_APPS = [
