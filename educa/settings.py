@@ -49,6 +49,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "courses.apps.CoursesConfig",
     "students.apps.StudentsConfig",
+    "chat.apps.ChatConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -56,6 +57,7 @@ THIRD_PARTY_APPS = [
     "debug_toolbar",
     "redisboard",
     "rest_framework",
+    "channels",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -91,7 +93,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "educa.wsgi.application"
-
+ASGI_APPLICATION = "educa.asgi.application"
 
 # REST FRAMEWORK
 
@@ -162,4 +164,14 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379",
     }
+}
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
