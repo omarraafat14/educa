@@ -1,8 +1,23 @@
 services:
 
+  db:
+    image: postgres:14.5
+    container_name: educa-db
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file: .env
+
   web:
     build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    container_name: educa-web
+    command:
+      [
+        "python",
+        "/code/manage.py",
+        "runserver",
+        "0.0.0.0:8000"
+      ]
     restart: always
     volumes:
       - .:/code
@@ -10,3 +25,6 @@ services:
       - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=educa.settings.prod
+    depends_on:
+      - db
+    env_file: .env
