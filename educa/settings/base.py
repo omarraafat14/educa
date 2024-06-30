@@ -71,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "courses.middleware.subdomain_course_middleware",
 ]
 
 ROOT_URLCONF = "educa.urls"
@@ -101,7 +102,6 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
-
 
 
 # Password validation
@@ -139,7 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
