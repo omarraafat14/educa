@@ -18,12 +18,7 @@ services:
   web:
     build: .
     container_name: educa-web
-    command:
-      [
-        "uwsgi",
-        "--ini",
-        "/code/config/uwsgi/uwsgi.ini"
-      ]
+    command: [ "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini" ]
     restart: always
     volumes:
       - .:/code
@@ -35,3 +30,13 @@ services:
       - db
       - cache
     env_file: .env
+
+  nginx:
+    image: nginx:1.23.1
+    container_name: educa-nginx
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - "80:80"
