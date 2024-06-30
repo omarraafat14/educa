@@ -41,3 +41,22 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+  daphne:
+    build: .
+    working_dir: /code/
+    command:
+      [
+        "daphne",
+        "-u",
+        "/code/educa/daphne.sock",
+        "educa.asgi:application"
+      ]
+    restart: always
+    volumes:
+      - .:/code
+    environment:
+      - DJANGO_SETTINGS_MODULE=educa.settings.prod
+    depends_on:
+      - db
+      - cache
