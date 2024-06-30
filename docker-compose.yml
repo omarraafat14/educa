@@ -8,6 +8,13 @@ services:
       - ./data/db:/var/lib/postgresql/data
     env_file: .env
 
+  cache:
+    image: redis:7.0.4
+    container_name: educa-cache
+    restart: always
+    volumes:
+      - ./data/cache:/data
+
   web:
     build: .
     container_name: educa-web
@@ -27,4 +34,5 @@ services:
       - DJANGO_SETTINGS_MODULE=educa.settings.prod
     depends_on:
       - db
+      - cache
     env_file: .env
