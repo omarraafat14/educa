@@ -17,7 +17,7 @@ from django.urls import reverse_lazy
 LOGIN_REDIRECT_URL = reverse_lazy("student_course_list")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +27,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY", cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -72,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "courses.middleware.subdomain_course_middleware",
 ]
 
 ROOT_URLCONF = "educa.urls"
@@ -101,16 +101,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
-}
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
 }
 
 
@@ -149,6 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"

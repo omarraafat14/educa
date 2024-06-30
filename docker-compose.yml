@@ -1,0 +1,62 @@
+services:
+
+  db:
+    image: postgres:14.5
+    container_name: educa-db
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file: .env
+
+  cache:
+    image: redis:7.0.4
+    container_name: educa-cache
+    restart: always
+    volumes:
+      - ./data/cache:/data
+
+  web:
+    build: .
+    container_name: educa-web
+    command: [ "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini" ]
+    restart: always
+    volumes:
+      - .:/code
+    # ports:
+    #   - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=educa.settings.prod
+    depends_on:
+      - db
+      - cache
+    env_file: .env
+
+  nginx:
+    image: nginx:1.23.1
+    container_name: educa-nginx
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - "80:80"
+      - "443:443"
+
+  daphne:
+    build: .
+    working_dir: /code/
+    command:
+      [
+        "daphne",
+        "-u",
+        "/code/educa/daphne.sock",
+        "educa.asgi:application"
+      ]
+    restart: always
+    volumes:
+      - .:/code
+    environment:
+      - DJANGO_SETTINGS_MODULE=educa.settings.prod
+    depends_on:
+      - db
+      - cache
